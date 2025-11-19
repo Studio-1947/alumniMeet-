@@ -1,0 +1,16 @@
+{
+  "name": "college-alumni-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client start\"",
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  },
+  "dependencies": {
+    "mongodb": "^7.0.0"
+  }
+}
