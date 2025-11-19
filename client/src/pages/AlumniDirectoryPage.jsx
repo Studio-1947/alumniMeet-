@@ -14,28 +14,25 @@ const AlumniDirectoryPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const loadAlumni = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data } = await fetchUsers({ ...filters, page, limit: 8 });
-      setAlumni(data.data);
-      setTotalPages(data.totalPages);
-    } catch (err) {
-      setError('Failed to load alumni. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const loadAlumni = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const { data } = await fetchUsers({ ...filters, page, limit: 8 });
+        setAlumni(data.data);
+        setTotalPages(data.totalPages);
+      } catch (err) {
+        setError('Failed to load alumni. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
     loadAlumni();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [filters, page]);
 
   const handleSearch = () => {
     setPage(1);
-    loadAlumni();
   };
 
   return (
