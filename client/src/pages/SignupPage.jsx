@@ -65,7 +65,18 @@ const SignupPage = () => {
       await signup(payload);
       navigate('/dashboard');
     } catch (err) {
-      setServerError(err.response?.data?.message || 'Signup failed, please try again');
+      const responseData = err.response?.data;
+      if (responseData?.errors) {
+        const backendErrors = {};
+        responseData.errors.forEach((error) => {
+          if (error.path) {
+            backendErrors[error.path] = error.msg;
+          }
+        });
+        setErrors(backendErrors);
+      } else {
+        setServerError(responseData?.message || 'Signup failed, please try again');
+      }
     } finally {
       setLoading(false);
     }

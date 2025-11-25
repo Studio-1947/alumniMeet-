@@ -29,6 +29,7 @@ const LoginPage = () => {
       navigate(redirectPath);
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }

@@ -26,7 +26,19 @@ const rawClientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:3000";
 const allowedOrigins = rawClientOrigin
   .split(",")
   .map((s) => s.trim())
+  .map((s) => {
+    try {
+      return new URL(s).origin;
+    } catch (e) {
+      return s;
+    }
+  })
   .filter(Boolean);
+
+// Ensure localhost is always allowed for development convenience
+if (!allowedOrigins.includes("http://localhost:3000")) {
+  allowedOrigins.push("http://localhost:3000");
+}
 
 app.use(
   cors({
